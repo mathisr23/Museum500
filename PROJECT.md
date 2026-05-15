@@ -108,7 +108,8 @@ Chaque incident = même 7 sections, scroll-driven :
 - [x] GSAP ScrollTrigger : reveal sections + scrub line timeline ✓
 - [x] Polish visuel layer 1 : grain, scan lines, glitch, loader, compteur ✓
 - [x] Polish visuel layer 2 : curseur forensic, corridor 3D CSS, page transitions, scramble, marquee ✓
-- [x] Polish visuel layer 3 : sound design Web Audio, click splash, kinetic 3D parallax, particle field ✓
+- [x] Polish visuel layer 3 : click splash, kinetic 3D parallax, particle field ✓
+- [x] Son : abandonné après 3 itérations (drone tonal puis room tone synthétisé) — le Web Audio synthétisé fatiguait l'oreille. `AudioService` + bouton son supprimés. Si réintroduit un jour : passer par de vrais fichiers d'ambiance (field recordings), pas de la synthèse.
 - [x] SEO complet : Title/Meta/OG/Twitter/JSON-LD prerendu, sitemap.xml, robots.txt, og-default.svg ✓
 - [x] Hero images par salle : pipeline `sharp` raw→webp (800/1280/1920), composant `IncidentHeroComponent` plein-bleed 21:9 avec vignette/label/coins forensiques/parallax ✓
 - [ ] **PROCHAIN BLOC** — `git init` + push GitHub + deploy Vercel + connect domaine custom
