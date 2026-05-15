@@ -5,9 +5,12 @@ import { ScrollService } from './scroll.service';
 /**
  * Wrapper SSR-safe pour GSAP + ScrollTrigger.
  * - Charge dynamiquement côté browser uniquement
- * - Intègre Lenis avec ScrollTrigger : Lenis pilote via gsap.ticker,
- *   et notifie ScrollTrigger.update à chaque scroll. Sans ça, les
- *   ScrollTrigger peuvent ne pas se déclencher (Lenis intercepte les events natifs).
+ * - Intègre Lenis avec ScrollTrigger : on notifie ScrollTrigger.update à
+ *   chaque scroll Lenis. Sans ça, les triggers peuvent ne pas se déclencher.
+ *
+ * IMPORTANT : Lenis est piloté UNIQUEMENT par la boucle RAF de ScrollService.
+ * Surtout NE PAS ajouter lenis.raf() à gsap.ticker — ça appellerait raf()
+ * deux fois par frame et rendrait le scroll saccadé (cran par cran).
  */
 @Injectable({ providedIn: 'root' })
 export class GsapService {
@@ -25,13 +28,13 @@ export class GsapService {
         const stMod = await import('gsap/ScrollTrigger');
         gsapMod.gsap.registerPlugin(stMod.ScrollTrigger);
 
-        // Intégration Lenis ↔ GSAP ScrollTrigger
+        // Intégration Lenis ↔ GSAP ScrollTrigger.
+        // On se contente de notifier ScrollTrigger à chaque scroll.
+        // Lenis reste piloté par la boucle RAF unique de ScrollService.
         await this.scrollSvc.init();
         const lenis = this.scrollSvc.getLenis();
         if (lenis) {
           lenis.on('scroll', () => stMod.ScrollTrigger.update());
-          gsapMod.gsap.ticker.add((time) => lenis.raf(time * 1000));
-          gsapMod.gsap.ticker.lagSmoothing(0);
         }
 
         return gsapMod;
