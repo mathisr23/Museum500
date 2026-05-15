@@ -1,0 +1,19 @@
+<div
+  #root
+  class="cursor-root"
+  [class.is-hover]="hovering()"
+  [class.is-click]="clicking()"
+  aria-hidden="true"
+>
+  <div #vline class="cursor-line cursor-line--v"></div>
+  <div #hline class="cursor-line cursor-line--h"></div>
+  <div #label class="cursor-label">
+    @if (hoverLabel(); as hl) {
+      <span class="cursor-label__hover">{{ hl }}</span>
+    } @else {
+      <span class="cursor-label__coords">
+        [ X: {{ coordX() }} / Y: {{ coordY() }} ]
+      </span>
+    }
+  </div>
+</div>

@@ -1,0 +1,38 @@
+:host {
+  display: contents;
+}
+
+.loader {
+  transition: opacity 600ms ease, filter 600ms ease;
+}
+
+.loader--fading {
+  opacity: 0;
+  filter: blur(8px);
+}
+
+.loader__line {
+  opacity: 0;
+  animation: loader-in 240ms ease-out forwards;
+}
+
+.loader__caret {
+  animation: loader-blink 700ms steps(1) infinite;
+}
+
+@keyframes loader-in {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes loader-blink {
+  50% {
+    opacity: 0;
+  }
+}

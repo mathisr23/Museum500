@@ -1,0 +1,137 @@
+@if (incident(); as inc) {
+  <article #root class="mx-auto max-w-5xl px-6 py-16 md:px-12 md:py-24">
+    <!-- 1. ANTICHAMBRE -->
+    <section class="border-b border-parchment/10 pb-16" data-reveal>
+      <a routerLink="/" class="font-mono text-xs uppercase tracking-[0.3em] text-parchment/40 hover:text-parchment" data-reveal-child>
+        ← MUSEUM
+      </a>
+      <p class="mt-12 font-mono text-xs uppercase tracking-[0.3em] text-error" data-reveal-child>
+        {{ inc.category }}
+      </p>
+      <h1 class="mt-6 text-balance font-display text-5xl leading-[0.95] md:text-7xl" data-reveal-child>
+        <app-glitch-text [text]="inc.title" />
+      </h1>
+      <p class="mt-8 max-w-prose font-sans text-lg text-parchment/70" data-reveal-child>{{ inc.tagline }}</p>
+
+      <dl class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div data-reveal-child>
+          <dt class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40">Date</dt>
+          <dd class="mt-2 font-mono text-2xl text-parchment">{{ inc.date | date: 'longDate' }}</dd>
+        </div>
+        <div data-reveal-child>
+          <dt class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40">Durée</dt>
+          <dd class="mt-2 font-mono text-2xl text-parchment">{{ inc.damages.duration }}</dd>
+        </div>
+        @if (inc.damages.cost) {
+          <div data-reveal-child>
+            <dt class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40">Coût</dt>
+            <dd class="mt-2 font-mono text-2xl text-error">{{ inc.damages.cost }}</dd>
+          </div>
+        }
+      </dl>
+    </section>
+
+    <!-- HERO IMAGE — full-bleed entre l'antichambre et le décor -->
+    <app-incident-hero [slug]="slug()" [installation]="installation()" />
+
+    <!-- 2. LE DÉCOR -->
+    <section class="py-16 md:py-24" data-reveal>
+      <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40" data-reveal-child>02 / Décor</p>
+      <p class="mt-6 max-w-prose whitespace-pre-line font-sans text-lg leading-relaxed text-parchment/85" data-reveal-child>
+        {{ inc.context }}
+      </p>
+    </section>
+
+    <!-- 3. TIMELINE -->
+    <section class="border-y border-parchment/10 py-16 md:py-24" data-reveal>
+      <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40" data-reveal-child>03 / Timeline</p>
+      <ol class="timeline mt-10" data-timeline>
+        <span class="timeline__line" data-timeline-line aria-hidden="true"></span>
+        @for (entry of inc.timeline; track entry.time) {
+          <li class="timeline__entry" data-reveal-child>
+            <span class="timeline__dot" aria-hidden="true"></span>
+            <span class="timeline__time">{{ entry.time }}</span>
+            <span class="timeline__event">{{ entry.event }}</span>
+          </li>
+        }
+      </ol>
+    </section>
+
+    <!-- 4. CODE COUPABLE -->
+    @if (inc.culpritCode) {
+      <section class="py-16 md:py-24" data-reveal>
+        <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40" data-reveal-child>04 / Code coupable</p>
+        <pre data-reveal-child class="culprit mt-8 overflow-x-auto rounded border border-error/30 bg-bone p-6 font-mono text-sm leading-relaxed text-parchment"><code>{{ inc.culpritCode.snippet }}</code></pre>
+        <p class="mt-4 max-w-prose font-sans text-sm italic text-parchment/60" data-reveal-child>
+          {{ inc.culpritCode.annotation }}
+        </p>
+      </section>
+    }
+
+    <!-- 5. TÉMOIGNAGES -->
+    <section class="border-y border-parchment/10 py-16 md:py-24" data-reveal>
+      <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40" data-reveal-child>05 / Témoignages</p>
+      @for (t of inc.testimonies; track t.source) {
+        <figure class="mt-10" data-reveal-child>
+          <blockquote class="font-display text-2xl leading-snug text-parchment md:text-3xl">
+            « {{ t.quote }} »
+          </blockquote>
+          <figcaption class="mt-4 font-mono text-xs uppercase tracking-wider text-parchment/50">
+            — {{ t.source }} —
+            <a [href]="t.url" target="_blank" rel="noopener" class="text-error hover:underline">source</a>
+          </figcaption>
+        </figure>
+      }
+    </section>
+
+    <!-- 6. LEÇONS -->
+    <section class="py-16 md:py-24" data-reveal>
+      <p class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40" data-reveal-child>06 / Leçons</p>
+      <ul class="mt-10 grid gap-8 md:grid-cols-3">
+        @for (l of inc.lessons; track l.title; let i = $index) {
+          <li class="border-t border-error/30 pt-6" data-reveal-child>
+            <span class="font-mono text-xs text-error">{{ i + 1 | number: '2.0' }}</span>
+            <h3 class="mt-3 font-display text-xl leading-tight text-parchment">{{ l.title }}</h3>
+            <p class="mt-3 font-sans text-sm leading-relaxed text-parchment/70">{{ l.body }}</p>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <!-- 7. SORTIE -->
+    <section class="border-t border-parchment/10 pt-16" data-reveal>
+      <a [href]="inc.postMortemUrl" target="_blank" rel="noopener" class="font-mono text-xs uppercase tracking-[0.3em] text-parchment/60 hover:text-error" data-reveal-child>
+        Lire le post-mortem officiel ↗
+      </a>
+      @if (nextRoom(); as next) {
+        <a
+          [routerLink]="['/musee', next.slug]"
+          class="next mt-12 block border-l-2 border-error/40 bg-bone p-8 transition-colors hover:bg-ash md:p-12"
+          data-reveal-child
+        >
+          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40">Salle suivante</span>
+          <h3 class="mt-4 font-display text-3xl text-parchment md:text-5xl">{{ next.shortName }} →</h3>
+          <p class="mt-3 max-w-prose text-sm text-parchment/70">{{ next.tagline }}</p>
+        </a>
+      } @else {
+        <a
+          routerLink="/"
+          class="next mt-12 block border-l-2 border-error/40 bg-bone p-8 hover:bg-ash md:p-12"
+          data-reveal-child
+        >
+          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40">Sortie</span>
+          <h3 class="mt-4 font-display text-3xl text-parchment md:text-5xl">Retour au plan →</h3>
+        </a>
+      }
+    </section>
+  </article>
+} @else {
+  <div class="flex min-h-screen items-center justify-center px-6">
+    <div class="text-center">
+      <p class="font-mono text-xs uppercase tracking-[0.3em] text-error">404 — Salle introuvable</p>
+      <a routerLink="/" class="mt-4 inline-block font-display text-3xl text-parchment hover:text-error">
+        Retour au plan ↗
+      </a>
+    </div>
+  </div>
+}

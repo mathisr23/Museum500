@@ -1,0 +1,68 @@
+:host {
+  display: contents;
+}
+
+.transition {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: curtain-in 280ms ease forwards;
+  pointer-events: none;
+}
+
+.transition--exit {
+  animation: curtain-out 480ms ease forwards;
+}
+
+.transition__inner {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+}
+
+.transition__line {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.transition__caret {
+  display: inline-block;
+  color: #ff2e2e;
+  animation: caret-blink 500ms steps(1) infinite;
+}
+
+@keyframes curtain-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes curtain-out {
+  from {
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 100%);
+  }
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition,
+  .transition--exit {
+    animation-duration: 80ms;
+  }
+}

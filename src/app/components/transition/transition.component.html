@@ -1,0 +1,22 @@
+@if (active()) {
+  <div
+    class="transition"
+    [class.transition--exit]="status() === 'response'"
+    aria-hidden="true"
+  >
+    <div class="transition__inner">
+      <p class="transition__line">
+        <span class="text-error">$</span>
+        @if (status() === 'request') {
+          <span class="text-parchment/80">GET</span>
+          <span class="text-parchment">{{ path() }}</span>
+          <span class="transition__caret">_</span>
+        } @else {
+          <span class="text-parchment/80">GET</span>
+          <span class="text-parchment">{{ path() }}</span>
+          <span class="text-terminal">→ 200 OK</span>
+        }
+      </p>
+    </div>
+  </div>
+}

@@ -1,0 +1,72 @@
+<section class="home relative isolate flex min-h-screen flex-col overflow-hidden">
+  <app-corridor />
+
+  <div class="relative z-10 flex flex-1 flex-col px-6 py-10 md:px-16 md:py-14" appParallaxHero>
+    <header class="flex items-baseline justify-between">
+      <span class="parallax-layer font-mono text-xs uppercase tracking-[0.3em] text-parchment/60" data-depth="0.4" appScramble>
+        MUSEUM / 500
+      </span>
+      <span class="parallax-layer font-mono text-xs uppercase tracking-[0.3em] text-parchment/40" data-depth="0.4" appScramble [appScrambleDelay]="200">
+        EST. 2026 — 5 ROOMS
+      </span>
+    </header>
+
+    <div class="flex flex-1 flex-col justify-center py-14 md:py-20">
+      <div class="parallax-layer mb-10 flex items-baseline gap-6" data-depth="0.6">
+        <span class="font-mono text-xs uppercase tracking-[0.3em] text-error/80">
+          &gt; errors_logged
+        </span>
+        <span class="counter font-mono text-sm text-parchment/80 md:text-base">
+          {{ errorCount() | number }}
+        </span>
+      </div>
+
+      <h1 class="hero-title text-balance font-display text-6xl leading-[0.92] md:text-[9.5vw] md:leading-[0.88]">
+        <span class="parallax-layer block" data-depth="-0.6">
+          <app-glitch-text text="Cinq erreurs" />
+        </span>
+        <em class="parallax-layer block italic text-parchment/70" data-depth="0.3">qui ont changé</em>
+        <span class="parallax-layer block" data-depth="-0.4">
+          <app-glitch-text text="le software." />
+        </span>
+      </h1>
+
+      <p class="parallax-layer mt-10 max-w-prose font-sans text-base text-parchment/70 md:text-lg" data-depth="0.5" appScramble [appScrambleDelay]="500">
+        Des regex catastrophiques aux race conditions mortelles, des rm -rf sur la mauvaise machine aux drivers kernel qui clouent 8,5 millions d'ordinateurs au sol — chaque salle de ce musée raconte un bug en production qui a marqué l'histoire.
+      </p>
+    </div>
+
+    <nav aria-label="Plan du musée" class="rooms grid gap-px overflow-hidden border border-parchment/10 md:grid-cols-5">
+      @for (room of rooms; track room.slug; let i = $index) {
+        <a
+          [routerLink]="['/musee', room.slug]"
+          class="room group relative block bg-ink/85 p-5 backdrop-blur-sm transition-colors duration-300 hover:bg-bone md:p-6"
+          [attr.data-cursor]="'→ SALLE ' + (i + 1)"
+        >
+          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-parchment/40">
+            Salle {{ i + 1 | number: '2.0' }}
+          </span>
+          <h2 class="mt-3 font-display text-2xl leading-tight md:text-3xl" appScramble [appScrambleDelay]="600 + i * 80">
+            {{ room.shortName }}
+          </h2>
+          <p class="mt-2 font-mono text-xs text-parchment/50">{{ room.date | date: 'yyyy' }}</p>
+          <p class="mt-4 line-clamp-3 text-sm text-parchment/70">{{ room.tagline }}</p>
+          <span class="room__sweep" aria-hidden="true"></span>
+          <span class="absolute bottom-4 right-5 font-mono text-xs text-error opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            ↗
+          </span>
+        </a>
+      }
+    </nav>
+  </div>
+
+  <app-marquee />
+
+  <footer class="relative z-10 flex items-baseline justify-between px-6 py-4 font-mono text-xs uppercase tracking-[0.3em] text-parchment/40 md:px-16">
+    <span class="flex items-center gap-2">
+      <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-error"></span>
+      Scroll to enter
+    </span>
+    <span>HTTP/1.1 500 — Internal Server Error</span>
+  </footer>
+</section>

@@ -1,0 +1,13 @@
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    @for (i of items; track i) {
+      <span class="marquee__item">{{ i }}</span>
+      <span class="marquee__sep">/</span>
+    }
+    <!-- Duplication pour boucle continue -->
+    @for (i of items; track i) {
+      <span class="marquee__item">{{ i }}</span>
+      <span class="marquee__sep">/</span>
+    }
+  </div>
+</div>

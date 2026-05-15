@@ -1,0 +1,25 @@
+@if (visible()) {
+  <div
+    class="loader fixed inset-0 z-[100] flex items-center justify-center bg-ink"
+    [class.loader--fading]="fading()"
+    aria-hidden="true"
+  >
+    <!-- ASCII frame -->
+    <pre class="loader__frame pointer-events-none absolute inset-x-0 top-6 text-center font-mono text-[10px] leading-tight text-parchment/30 md:text-xs">
+{{ '┌' }}{{ '─'.repeat(20) }} MUSEUM // 500 {{ '─'.repeat(20) }}{{ '┐' }}
+    </pre>
+
+    <div class="loader__content w-full max-w-2xl px-6 font-mono text-sm md:text-base">
+      @for (line of lines(); track $index) {
+        <p [class]="'loader__line ' + line.className">
+          <span class="text-error/60">{{ line.prefix }}</span>
+          <span class="ml-2">{{ line.text }}</span>
+          <span class="ml-2 opacity-70">[{{ line.status }}]</span>
+        </p>
+      }
+      @if (!fading()) {
+        <span class="loader__caret inline-block h-[1em] w-[0.55ch] translate-y-[2px] bg-error align-baseline"></span>
+      }
+    </div>
+  </div>
+}

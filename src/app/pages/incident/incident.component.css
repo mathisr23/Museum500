@@ -1,0 +1,94 @@
+:host {
+  display: block;
+}
+
+/* TIMELINE — grid 3 colonnes : dot (24px) | time (180px) | event (auto)
+   Le trait vertical est à left: 12px → centré sur la colonne du dot.
+   align-items: center garantit que le dot, le time et la première ligne
+   du event sont sur le même axe vertical. */
+.timeline {
+  position: relative;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline__line {
+  position: absolute;
+  left: 12px;
+  top: 1.25rem;
+  bottom: 1.25rem;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 46, 46, 0.7), transparent);
+  transform-origin: top;
+  /* GSAP scrub anime scaleY de 0 → 1 ; fallback 1 si JS off */
+}
+
+.timeline__entry {
+  display: grid;
+  grid-template-columns: 24px 160px 1fr;
+  gap: 1rem 1.25rem;
+  align-items: center;
+  padding-block: 0.6rem;
+}
+
+@media (min-width: 768px) {
+  .timeline__entry {
+    grid-template-columns: 24px 200px 1fr;
+    gap: 1rem 1.75rem;
+  }
+}
+
+.timeline__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 9999px;
+  background: #ff2e2e;
+  box-shadow: 0 0 0 4px rgba(255, 46, 46, 0.18), 0 0 12px rgba(255, 46, 46, 0.4);
+  justify-self: center; /* centre le dot horizontalement dans la colonne 24px */
+  position: relative;
+  z-index: 1;
+}
+
+.timeline__time {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ff2e2e;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.timeline__event {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: rgba(232, 230, 225, 0.85);
+}
+
+/* CULPRIT CODE — glow rouge subtil */
+.culprit {
+  box-shadow: inset 0 0 0 1px rgba(255, 46, 46, 0.12), 0 0 40px -20px rgba(255, 46, 46, 0.4);
+}
+
+/* NEXT card — flèche qui glisse */
+.next {
+  position: relative;
+  overflow: hidden;
+}
+.next::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 40%, rgba(255, 46, 46, 0.06) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 800ms ease;
+}
+.next:hover::after {
+  transform: translateX(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline__line {
+    transform: scaleY(1) !important;
+  }
+}

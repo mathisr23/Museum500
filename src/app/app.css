@@ -1,0 +1,46 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 40;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(255, 255, 255, 0.025) 2px,
+    rgba(255, 255, 255, 0.025) 3px
+  );
+  mix-blend-mode: overlay;
+  animation: scanlines-flicker 4s steps(1) infinite;
+}
+
+@keyframes scanlines-flicker {
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+  92.5% {
+    opacity: 0.4;
+  }
+  93% {
+    opacity: 1;
+  }
+  93.5% {
+    opacity: 0.6;
+  }
+  94% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scanlines {
+    animation: none;
+  }
+}

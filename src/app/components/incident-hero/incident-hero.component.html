@@ -1,0 +1,24 @@
+<figure #root class="hero">
+  <img
+    class="hero-img"
+    [src]="src()"
+    [srcset]="srcset()"
+    sizes="100vw"
+    width="1920"
+    height="820"
+    alt=""
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <span class="hero__vignette" aria-hidden="true"></span>
+  <figcaption class="hero__label">
+    <span class="hero__bracket">[</span>
+    <span class="hero__label-text">{{ label() }}</span>
+    <span class="hero__bracket">]</span>
+  </figcaption>
+  <span class="hero__corner hero__corner--tl"></span>
+  <span class="hero__corner hero__corner--tr"></span>
+  <span class="hero__corner hero__corner--bl"></span>
+  <span class="hero__corner hero__corner--br"></span>
+</figure>

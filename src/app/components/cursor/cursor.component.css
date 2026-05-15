@@ -1,0 +1,89 @@
+:host {
+  display: contents;
+}
+
+.cursor-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+.cursor-root--ready {
+  opacity: 1;
+}
+
+.cursor-line {
+  position: absolute;
+  background: rgba(232, 230, 225, 0.55);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  will-change: transform;
+  transition: background 180ms ease, height 180ms ease, width 180ms ease;
+}
+
+.cursor-line--v {
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100vh;
+  transform: translateX(-100px);
+}
+
+.cursor-line--h {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 1px;
+  transform: translateY(-100px);
+}
+
+.is-hover .cursor-line {
+  background: rgba(255, 46, 46, 0.85);
+  mix-blend-mode: normal;
+}
+.is-hover .cursor-line--v {
+  width: 2px;
+}
+.is-hover .cursor-line--h {
+  height: 2px;
+}
+
+.is-click .cursor-line {
+  background: #00ff88;
+}
+
+.cursor-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 4px 8px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: #0a0a0a;
+  border: 1px solid rgba(232, 230, 225, 0.2);
+  color: rgba(232, 230, 225, 0.7);
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.is-hover .cursor-label {
+  border-color: rgba(255, 46, 46, 0.7);
+  color: #ff2e2e;
+  background: #0a0a0a;
+}
+
+.cursor-label__hover {
+  font-weight: 500;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-root {
+    display: none;
+  }
+}

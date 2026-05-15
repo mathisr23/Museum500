@@ -1,0 +1,69 @@
+:host {
+  display: inline-block;
+}
+
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch--chroma::before,
+.glitch--chroma::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.glitch--chroma::before {
+  color: #ff2e2e;
+  transform: translate(-2px, 0);
+  mix-blend-mode: screen;
+  animation: glitch-jitter 6s steps(1) infinite;
+  clip-path: inset(0 0 0 0);
+}
+
+.glitch--chroma::after {
+  color: #00ff88;
+  transform: translate(2px, 0);
+  mix-blend-mode: screen;
+  animation: glitch-jitter 6s steps(1) infinite reverse;
+  clip-path: inset(0 0 0 0);
+}
+
+@keyframes glitch-jitter {
+  0%,
+  93%,
+  100% {
+    transform: translate(0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+  93.5% {
+    transform: translate(-3px, 1px);
+    clip-path: inset(20% 0 60% 0);
+  }
+  94% {
+    transform: translate(2px, -1px);
+    clip-path: inset(50% 0 30% 0);
+  }
+  94.5% {
+    transform: translate(-2px, 0);
+    clip-path: inset(70% 0 10% 0);
+  }
+  95%,
+  99% {
+    transform: translate(0, 0);
+    clip-path: inset(0 0 0 0);
+  }
+  99.5% {
+    transform: translate(1px, 1px);
+    clip-path: inset(40% 0 40% 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch--chroma::before,
+  .glitch--chroma::after {
+    display: none;
+  }
+}
